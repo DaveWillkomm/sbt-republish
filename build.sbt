@@ -2,7 +2,7 @@ import sbt.Project.Initialize
 import sbtassembly.AssemblyPlugin.baseAssemblySettings
 import scala.util.matching.Regex
 
-def sbtVersionToRepublish = "0.13.15"
+def sbtVersionToRepublish = "0.13.18"
 def sbtScalaVersion = "2.10.6"
 
 val Deps = config("deps") hide
@@ -17,7 +17,7 @@ lazy val root = (project in file(".")).
     name := "sbt-republish",
     inThisBuild(Seq(
       version := sbtVersionToRepublish,
-      organization := "com.typesafe.sbt",
+      organization := "com.imanage.sbt",
       scalaVersion := sbtScalaVersion
     )),
     publishArtifact := false,
@@ -136,7 +136,7 @@ lazy val commonSettings = Seq(
     else if (v.endsWith("SNAPSHOT")) Some("snapshots" at SnapshotRepository)
     else Some("releases" at ReleaseRepository)
   },
-  // credentials += Credentials(Path.userHome / ".ivy2" / "sonatype-credentials"),
+  credentials += Credentials(Path.userHome / ".ivy2" / "credentials"),
   publishArtifact in Test := false,
   homepage := Some(url("http://www.scala-sbt.org/")),
   licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php")),
@@ -156,5 +156,5 @@ lazy val commonSettings = Seq(
 
 def environment(property: String, env: String): Option[String] =
   Option(System.getProperty(property)) orElse Option(System.getenv(env))
-def ReleaseRepository = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-def SnapshotRepository = "https://oss.sonatype.org/content/repositories/snapshots"
+def ReleaseRepository = "https://artifactory.imanage.com/artifactory/work-libs-release-local"
+def SnapshotRepository = ""
